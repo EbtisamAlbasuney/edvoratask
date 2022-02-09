@@ -7,7 +7,7 @@ import {faAngleLeft,faAngleRight} from "@fortawesome/free-solid-svg-icons"
 
 
 
-function ProductList({catogory}) {
+function ProductList({catogory,city, product, state}) {
 
  const[pagenumber,setPagenumber]= useState (1)
  const[products,setProducts]=useState();
@@ -19,9 +19,20 @@ function ProductList({catogory}) {
   useEffect(()=>{
    const getProduct = async()=>{
 
-    
+   
      try {
-      const response = await axios.get(`http://localhost:3004/products?_limit=4&_page=${pagenumber}&brand_name=${catogory}`)
+      let filterUrl = ""
+      if (city!=""){
+        filterUrl = filterUrl.concat(`&address.city=${city}`)
+      }
+      if(state){
+        filterUrl= filterUrl.concat(`&address.state=${state}`)
+      }
+      if (product){
+        filterUrl= filterUrl.concat(`&product_name=${product}`)
+      }
+      console.log(city,filterUrl)
+      const response = await axios.get(`http://localhost:3004/products?_limit=4&_page=${pagenumber}&brand_name=${catogory}${filterUrl}`)
       const data = await  response.data
       setProducts(data)
       console.log(data)
@@ -32,7 +43,7 @@ function ProductList({catogory}) {
      }
    }
    getProduct()
-  },[pagenumber])
+  },[pagenumber,city,product,state])
 
   console.log(pagenumber)
 
@@ -62,7 +73,7 @@ function ProductList({catogory}) {
           
 
        </div>
-       <button onClick={()=>{setPagenumber(pagenumber+1)}}disabled={pagenumber==Math.ceil(56/4)?true:false}>
+       <button onClick={()=>{setPagenumber(pagenumber+1)}}disabled={products?.length===0?true:false}>
        <FontAwesomeIcon icon={faAngleRight} />
        </button>
 </div>

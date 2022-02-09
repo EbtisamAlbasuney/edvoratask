@@ -3,7 +3,7 @@ import axios from "axios";
 
 import './filter.css';
 
-function Filter() {
+function Filter({setcity,setstate,setproduct}) {
  const [cities,setCities]=useState()
  const [states,setstates]=useState()
 
@@ -36,20 +36,20 @@ function Filter() {
   return (
     <div className="div-filter">
         <p>Filters</p>
-     <select name="products" id="products" className="col-12">
-    <option value="volvo">Products</option>
+     <select name="products" id="products" className="col-12" onChange={(e)=>{setproduct(e?.target.value)}}>
+    <option value="">Products</option>
     {products?.map(item=>{return <option value={item}>{item}</option>})}
    
   </select>
 
-  <select name="state" id="state" className="col-12">
-    <option value="volvo">State</option>
+  <select name="state" id="state" className="col-12" onChange={(e)=>{setstate(e?.target.value)}}>
+    <option value="">State</option>
     {states?.map(item=>{return <option value={item}>{item}</option>})}
     
   </select>
 
-  <select name="city" id="city" className="col-12">
-  <option value="city">City</option>
+  <select name="city" id="city" className="col-12" onChange={(e)=>{setcity(e?.target.value)}}>
+  <option value="">City</option>
     {cities?.map(item=>{return <option value={item}>{item}</option>})}
     
   </select>

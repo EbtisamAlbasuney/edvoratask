@@ -5,7 +5,7 @@ import axios from "axios";
 
 
 
-function Catogories() {
+function Catogories({city, product, state}) {
 
 
 
@@ -17,7 +17,7 @@ function Catogories() {
         <h3 className="products"> Products</h3>
         {catogories.map(catogory =>{
        
-          return <ProductList catogory={catogory}/>
+          return <ProductList catogory={catogory} city={city} state={state} product={product}/>
         })}
        
 
